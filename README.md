@@ -4,9 +4,9 @@
 ## maven坐标
 
 ```xml
-<groupId>com.qcloud</groupId>
+<groupId>com.github.alishtory</groupId>
 <artifactId>cos_api</artifactId>
-<version>5.1.4</version>
+<version>5.1.7</version>
 ```
 
 
