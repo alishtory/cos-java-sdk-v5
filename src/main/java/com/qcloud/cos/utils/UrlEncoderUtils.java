@@ -13,11 +13,32 @@ public class UrlEncoderUtils {
 
     public static String encode(String originUrl) {
         try {
-            return URLEncoder.encode(originUrl, "UTF-8").replace("+", "%20");
+            String encodeStr = URLEncoder.encode(originUrl, "UTF-8").replace("+", "%2b");
+            String lowerCaseStr = lowerCaseTran(encodeStr);
+            return lowerCaseStr;
         } catch (UnsupportedEncodingException e) {
             log.error("URLEncoder error, encode utf8, exception: {}", e);
         }
         return null;
+    }
+
+    /**
+     * URL转义字符转小写
+     * @param str
+     * @return
+     */
+    private static String lowerCaseTran(String str){
+        if (!StringUtils.isNullOrEmpty(str)){
+            char[] chars = str.toCharArray();
+            for(int i = 0; i< chars.length-2; i++){
+                if (chars[i] == '%'){
+                    chars[i+1] = Character.toLowerCase(chars[i+1]);
+                    chars[i+2] = Character.toLowerCase(chars[i+2]);
+                }
+            }
+            str = new String(chars);
+        }
+        return str;
     }
 
     // encode路径, 不包括分隔符

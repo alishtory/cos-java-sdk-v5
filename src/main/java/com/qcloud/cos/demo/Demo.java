@@ -2,6 +2,7 @@ package com.qcloud.cos.demo;
 
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.qcloud.cos.COSClient;
@@ -23,9 +24,13 @@ import com.qcloud.cos.model.PutObjectResult;
 import com.qcloud.cos.region.Region;
 import com.qcloud.cos.transfer.TransferManager;
 import com.qcloud.cos.transfer.Upload;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Demo {
+    private static Logger logger = LoggerFactory.getLogger(Demo.class);
     public static void main(String[] args) throws Exception {
+        logger.info("main start...");
         // 用户基本信息
         String appid = "100000";
         String secret_id = "xxxxxxxxxxxxxxxx";
@@ -35,13 +40,14 @@ public class Demo {
         COSCredentials cred = new BasicCOSCredentials(appid, secret_id, secret_key);
         // 设置区域, 这里设置为华北
         ClientConfig clientConfig = new ClientConfig(new Region("cn-north"));
+        clientConfig.setEndPointSuffix("sztest.file.tencent-cloud.com");
         // 生成cos客户端对象
         COSClient cosClient = new COSClient(cred, clientConfig);
 
         // 创建bucket
         // bucket数量上限200个, bucket是重操作, 一般不建议创建如此多的bucket
         // 重复创建同名bucket会报错
-        String bucketName = "mybucket1511";
+        String bucketName = "mybucket15112222";
         CreateBucketRequest createBucketRequest = new CreateBucketRequest(bucketName);
         createBucketRequest.setCannedAcl(CannedAccessControlList.PublicReadWrite);
         Bucket created_bucket = cosClient.createBucket(createBucketRequest);
@@ -80,6 +86,10 @@ public class Demo {
         // list bucket下的成员
         ObjectListing objectListing = cosClient.listObjects(bucketName);
         List<COSObjectSummary> objectListSummary = objectListing.getObjectSummaries();
+
+        for(COSObjectSummary os:objectListSummary){
+            logger.debug("{} 最后修改时间：{}",os.getKey(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(os.getLastModified()));
+        }
 
         // 删除刚上传的文件
         deleteObjectRequest = new DeleteObjectRequest(bucketName, key);

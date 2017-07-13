@@ -25,6 +25,9 @@ public class DateUtils {
     protected static final DateTimeFormatter alternateIso8601DateFormat =
         DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(GMT);
 
+    /** Alternate ISO 8601 format without fractional seconds */
+    protected static final DateTimeFormatter simpleFormat = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
+
     /**
      * Formats the specified date as an RFC 822 string.
      *
@@ -99,7 +102,9 @@ public class DateUtils {
                 return new Date(alternateIso8601DateFormat.parseMillis(dateString));
                 // If the first ISO 8601 parser didn't work, try the alternate
                 // version which doesn't include fractional seconds
-            } catch(Exception oops) {
+            }catch (IllegalArgumentException e2) {
+                return new Date(simpleFormat.parseMillis(dateString));
+            }catch(Exception oops) {
                 // no the alternative route doesn't work; let's bubble up the original exception
                 throw e;
             }

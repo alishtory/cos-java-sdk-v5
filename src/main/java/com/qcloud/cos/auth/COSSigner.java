@@ -23,8 +23,12 @@ import com.qcloud.cos.http.CosHttpRequest;
 import com.qcloud.cos.http.HttpMethodName;
 import com.qcloud.cos.internal.CosServiceRequest;
 import com.qcloud.cos.utils.UrlEncoderUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class COSSigner {
+
+    private static final Logger logger = LoggerFactory.getLogger(COSSigner.class);
     
     private long signExpiredTime = SIGN_EXPIRED_TIME;
     
@@ -86,10 +90,12 @@ public class COSSigner {
         String formatStr = new StringBuilder().append(formatMethod).append(LINE_SEPARATOR)
                 .append(formatUri).append(LINE_SEPARATOR).append(formatParameters)
                 .append(LINE_SEPARATOR).append(formatHeaders).append(LINE_SEPARATOR).toString();
+        logger.debug("formatStr = \n{}", formatStr);
         String hashFormatStr = DigestUtils.sha1Hex(formatStr);
         String stringToSign = new StringBuilder().append(Q_SIGN_ALGORITHM_VALUE)
                 .append(LINE_SEPARATOR).append(qSignTimeStr).append(LINE_SEPARATOR)
                 .append(hashFormatStr).append(LINE_SEPARATOR).toString();
+        logger.debug("stringToSign = \n{}", stringToSign);
         String signature = HmacUtils.hmacSha1Hex(signKey, stringToSign);
 
         String authoriationStr = new StringBuilder().append(Q_SIGN_ALGORITHM_KEY).append("=")
@@ -99,6 +105,7 @@ public class COSSigner {
                 .append("&").append(Q_HEADER_LIST).append("=").append(qHeaderListStr).append("&")
                 .append(Q_URL_PARAM_LIST).append("=").append(qUrlParamListStr).append("&")
                 .append(Q_SIGNATURE).append("=").append(signature).toString();
+        logger.debug("authoriationStr = \n{}", authoriationStr);
         return authoriationStr;
     }
 

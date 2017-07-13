@@ -1,32 +1,32 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.qcloud</groupId>
+	<groupId>com.tencent.fit</groupId>
 	<artifactId>cos_api</artifactId>
-	<version>5.1.5</version>
+	<version>5.1.6</version>
 	<packaging>jar</packaging>
 	<name>cos-java-sdk</name>
-	<description>qcloud cos sdk for tencentyun</description>
-	<url>https://github.com/tencentyun/cos-java-sdk-v5</url>
+	<description>qcloud cos sdk for inner tencentyun</description>
+	<url>https://github.com/alishtory/cos-java-sdk-v5</url>
 
 	<licenses>
 		<license>
 			<name>cos-java-sdk</name>
-			<url>https://github.com/tencentyun/cos-java-sdk-v5</url>
+			<url>https://github.com/alishtory/cos-java-sdk-v5</url>
 		</license>
 	</licenses>
 
 	<developers>
 		<developer>
-			<name>chengwu</name>
-			<email>chengwu@tencent.com</email>
+			<name>v_zhichwang</name>
+			<email>v_zhichwang@tencent.com</email>
 		</developer>
 	</developers>
 
 	<scm>
-		<connection>scm:git:https://github.com/tencentyun/cos-java-sdk-v5.git</connection>
-		<developerConnection>scm:git:https://github.com/tencentyun/cos-java-sdk-v5.git</developerConnection>
-		<url>https://github.com/tencentyun/cos-java-sdk-v5</url>
+		<connection>scm:git:https://github.com/alishtory/cos-java-sdk-v5.git</connection>
+		<developerConnection>scm:git:https://github.com/alishtory/cos-java-sdk-v5.git</developerConnection>
+		<url>https://github.com/alishtory/cos-java-sdk-v5</url>
 	</scm>
 
 	<properties>
